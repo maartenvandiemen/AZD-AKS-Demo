@@ -49,3 +49,4 @@ output AZURE_REGISTRY_NAME string = acr.outputs.registryName
 output AZURE_REGISTRY_URI string = acr.outputs.loginServer
 output AZURE_RG_NAME string = rg.name
 output AZURE_AKS_CLUSTERNAME string = aks.outputs.clusterName
+output AZURE_MONITOR_NAME string = monitoring.outputs.monitorWorkspaceName
