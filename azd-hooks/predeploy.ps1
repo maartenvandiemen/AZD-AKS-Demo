@@ -1,6 +1,6 @@
 #!/usr/bin/env pwsh
 
-function Check-Command {
+function Assert-Command {
     param (
         [string]$command
     )
@@ -10,9 +10,9 @@ function Check-Command {
     }
 }
 
-Check-Command -command "az"
-Check-Command -command "kubectl"
-Check-Command -command "helm"
+Assert-Command -command "az"
+Assert-Command -command "kubectl"
+Assert-Command -command "helm"
 
 try {
     az aks get-credentials --resource-group ${env:AZURE_RG_NAME} --name ${env:AZURE_AKS_CLUSTERNAME} --overwrite-existing
