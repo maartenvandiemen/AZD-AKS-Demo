@@ -36,7 +36,7 @@ azd up
 ⏩ Note: you can delete the deployed scenario from the Azure Portal, or by running ```azd down``` from within the initiated folder.
 
 ## What is the demo scenario about?
-- Use the [demo guide](demoguide.md) for inspiration for your demo.
+- Use the [demo guide](demoguide/demoguide.md) for inspiration for your demo.
 
 ### ⏰ Time to deploy
 10 minutes
