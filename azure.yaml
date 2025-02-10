@@ -1,5 +1,10 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
-name: azd-aks-demo
+
+name: tdd-azd-aks-demo
+metadata:
+  template: tdd-azd-aks-demo@0.0.1-beta
+infra:
+   provider: bicep
 hooks:  
   predeploy: # This hook is executed before the deployment of the application to create the custom-values.yaml file
     windows:
