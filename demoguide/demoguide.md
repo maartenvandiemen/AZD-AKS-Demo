@@ -41,15 +41,15 @@ Thanks to the out-of-the-box deployed scenario, you get a fully, ready-to-use AK
 * grafana-%uniqueid% - Azure Managed Grafana
 * monitor-%uniqueid% - Azure Monitor workspace
 
-<img src="img/ResourceGroup_Overview.png" alt="AKS Resource Group" style="width:70%;">
+<img src="https://raw.githubusercontent.com/maartenvandiemen/AZD-AKS-Demo/refs/heads/main/demoguide/img/ResourceGroup_Overview.png" alt="AKS Resource Group" style="width:70%;">
 <br></br>
 
 Note: next to the AKS Services RG, there is also an MC_%resourcegroupname%_%aksname% RG, which contains the actual Azure Infrastructure Resources for the AKS Cluster, such as the VM Scale Set, Azure Load Balancer, Virtual Network and Subnets, Public IP Addresses, etc...
-<img src="img/MC_ResourceGroup_Overview.png" alt="AKS MC Resource Group" style="width:70%;">
+<img src="https://raw.githubusercontent.com/maartenvandiemen/AZD-AKS-Demo/refs/heads/main/demoguide/img/MC_ResourceGroup_Overview.png" alt="AKS MC Resource Group" style="width:70%;">
 <br></br>
 
 Note: next to the AKS Services RG, there is also an MA_%azuremonitorname%_%location%_managed RG, which contains the data collection rules and endpoints for collection the data for the Azure Monitor workspace.
-<img src="img/MA_ResourceGroup_Overview.png" alt="AKS MA Resource Group" style="width:70%;">
+<img src="https://raw.githubusercontent.com/maartenvandiemen/AZD-AKS-Demo/refs/heads/main/demoguide/img/MA_ResourceGroup_Overview.png" alt="AKS MA Resource Group" style="width:70%;">
 <br></br>
 
 
@@ -65,7 +65,7 @@ Note: next to the AKS Services RG, there is also an MA_%azuremonitorname%_%locat
 1. Briefly discuss the **AKS pricing tier**, allowing for a business-critical Scale Sets scenario with 99.95% SLA for the underlying AKS hosts.
 1. Navigate to **Kubernetes Resoureces/NameSpaces**. AKS Namespace is a way to group and organize Kubernetes objects in a cluster. It provides a scope for Kubernetes resources and prevents name collisions between resources. Namespaces allow multiple teams or applications to use the same cluster without interfering with each other. You can create multiple namespaces within an AKS cluster to isolate workloads, network policies, and security. The most common one is called **default**, which hosts our sample application Pods. Other Namespaces have been created for Kubernetes System Pods, as well as separate monitoring and Kubernetes Gatekeeper.
 
-<img src="img/AKS_NameSpaces.png" alt="AKS NameSpaces" style="width:70%;">
+<img src="https://raw.githubusercontent.com/maartenvandiemen/AZD-AKS-Demo/refs/heads/main/demoguide/img/AKS_NameSpaces.png" alt="AKS NameSpaces" style="width:70%;">
 <br></br>
 
 1. Select the **default** namespace. Open the **YAML** file and walk the learner through the basics of the **YAML Kubernetes** configuration file. It holds information about the NameSpace, the creation date, and how it is getting managed (kube-apiserver)
@@ -73,21 +73,21 @@ Note: next to the AKS Services RG, there is also an MA_%azuremonitorname%_%locat
 1.  In AKS, Workloads are **Kubernetes objects** that define the desired state of a set of containers, such as pods, deployments, and replica sets. Workloads provide a way to **manage and scale** containerized applications in a Kubernetes cluster. Deployments are commonly used to manage the desired state of replicas, while replica sets ensure that a specified number of pod replicas is running at any given time. **Pods** are the smallest deployable units in Kubernetes and represent one or more containers that are tightly coupled and share resources.
 1. In the extensive list of Workloads, several are managing the internals of the Kubernetes cluster, for example the kube-system Namespace ones, as well as the Gatekeeper ones. Our demo setup got extended with a **monitoring** Namespace, running **Prometheus** metrics and traces, **Chaos-testing** which allows for Chaos Engineering fault injection testing, and the **default** Namespace, which runs the sample Pods with applications.
 
-<img src="img/AKS_Workloads.png" alt="AKS Workloads" style="width:70%;">
+<img src="https://raw.githubusercontent.com/maartenvandiemen/AZD-AKS-Demo/refs/heads/main/demoguide/img/AKS_Workloads.png" alt="AKS Workloads" style="width:70%;">
 <br></br>
 
 1. From the list of Workloads, select **eshoponweb**. From the detailed Overview blade of the eshoponweb, notice 5 running containers. This is because our setup specified a parameter of **5 replicas**. 
 
 1. Select any of the 5 eshoponweb-xyz123 Pods, and click **Delete**. Notice the Status will change to **Terminating**, immediately followed by the creation of a **new Pod**, having the **Pending** Status. This will shortly change to **Running**.
 
-<img src="img/AKS_Pod_Replicas.png" alt="AKS Pod Replicas" style="width:70%;">
+<img src="https://raw.githubusercontent.com/maartenvandiemen/AZD-AKS-Demo/refs/heads/main/demoguide/img/AKS_Pod_Replicas.png" alt="AKS Pod Replicas" style="width:70%;">
 <br></br>
 
 1. Return to the Azure AKS Portal blade, and select **Services and ingresses**.  In AKS, Services are Kubernetes objects that provide a **stable IP address and DNS name** for a set of pods. Services enable **inter-pod communication within a cluster and also allow external access to the pods**. AKS supports different types of Services, such as ClusterIP, NodePort, and LoadBalancer, to suit different use cases. ClusterIP services are internal to the cluster and accessible only from within the cluster, while NodePort services expose a port on each node's IP address and make the service accessible externally via a static port. LoadBalancer services expose the service externally using a cloud provider's load balancer.
 1. From the list of **Services**, highlight **eshoponweb**. Explain it's running behind a **LoadBalancer**, and is public internet-facing using an Azure Public IP Address. **Select the Public IP**, and notice the EShopOnWeb app is running from within a Pod.
 1. Return to the **Services** view, and click on the **eshoponweb** service. From the detailed blade, notice the **Node port, Port 80 and the different internal IP Endpoints, representing the 5 replica Pods.
 
-<img src="img/AKS_Services.png" alt="AKS Services" style="width:70%;">
+<img src="https://raw.githubusercontent.com/maartenvandiemen/AZD-AKS-Demo/refs/heads/main/demoguide/img/AKS_Services.png" alt="AKS Services" style="width:70%;">
 <br></br>
 
 1. Return to the AKS Overview blade, and navigate to Settings/**Node Pools**. Node pools provide space for applications to run. Node pools of different types can be added to the cluster to handle a variety of workloads, existing node pools can be scaled and upgraded, or node pools that are no longer needed can be deleted. Each node pool will contain nodes backed by virtual machines.
@@ -97,7 +97,7 @@ Note: next to the AKS Services RG, there is also an MA_%azuremonitorname%_%locat
 1. Explain the difference between **manual and autoscale**.
 1. From the nodepool1 Overview blade, navigate to **Nodes**. This shows the 2 active running node-VMs.
 
-<img src="img/AKS_agentpool.png" alt="AKS agentpool" style="width:70%;">
+<img src="https://raw.githubusercontent.com/maartenvandiemen/AZD-AKS-Demo/refs/heads/main/demoguide/img/AKS_agentpool.png" alt="AKS agentpool" style="width:70%;">
 <br></br>
 
 #### Managing AKS using Kubernetes KubeControl command Line
@@ -121,7 +121,7 @@ kubectl get namespace
 kubectl get nodes
 ```
 
-<img src="img/AKS_kubectl.png" alt="AKS kubectl" style="width:70%;">
+<img src="https://raw.githubusercontent.com/maartenvandiemen/AZD-AKS-Demo/refs/heads/main/demoguide/img/AKS_kubectl.png" alt="AKS kubectl" style="width:70%;">
 <br></br>
 
 #### Using Prometheus and Grafana for monitoring metrics and dashboarding
