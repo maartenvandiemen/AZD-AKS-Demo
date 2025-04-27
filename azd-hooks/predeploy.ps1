@@ -64,6 +64,7 @@ try {
 
         $chaosMeshPods = kubectl get pods --namespace chaos-testing -l app.kubernetes.io/instance=chaos-mesh --no-headers
         if (-not $chaosMeshPods) {
+            helm repo update
             helm install chaos-mesh chaos-mesh/chaos-mesh --namespace=chaos-testing --set chaosDaemon.runtime=containerd --set chaosDaemon.socketPath=/run/containerd/containerd.sock
         }
     }
