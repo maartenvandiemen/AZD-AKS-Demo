@@ -14,7 +14,7 @@ var tags = {
   SecurityControl: 'Ignore'
 }
 
-resource rg 'Microsoft.Resources/resourceGroups@2022-09-01' = {
+resource rg 'Microsoft.Resources/resourceGroups@2025-04-01' = {
   name: 'rg-${environmentName}'
   location: location
   tags: tags

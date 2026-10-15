@@ -4,11 +4,12 @@ param tags object
 var uniqueName = uniqueString(resourceGroup().id, subscription().id)
 var registryName = 'acr${uniqueName}'
 
-resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = {
+resource registry 'Microsoft.ContainerRegistry/registries@2025-11-01' = {
   name: registryName
   location: resourceGroup().location
   properties: {
-    adminUserEnabled: true
+    // AKS pulls with its kubelet identity (AcrPull, see aks.bicep), so the admin user isn't needed
+    adminUserEnabled: false
   }
   tags: tags
   sku: {
@@ -18,7 +19,7 @@ resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = 
 
 var identityName = 'identity-${uniqueName}'
 
-resource userId 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
+resource userId 'Microsoft.ManagedIdentity/userAssignedIdentities@2024-11-30' = {
   location: resourceGroup().location
   name: identityName
   tags: tags
@@ -58,8 +59,8 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2023-08-01' = {
     }
   }
   properties: {
-    azCliVersion: '2.63.0' //There must a better way to automatically use latest instead of keep on updating the version.
-    scriptContent: 'az acr import --name ${registryName} --source ghcr.io/maartenvandiemen/eshoponweb:latest --image maartenvandiemen/eshoponweb:latest --force'
+    azCliVersion: '2.89.1'
+    scriptContent: 'az acr import --name ${registryName} --source ghcr.io/maartenvandiemen/eshoponwebmvc:latest --image maartenvandiemen/eshoponwebmvc:latest --force'
     retentionInterval: 'PT1H'
   }
 }
