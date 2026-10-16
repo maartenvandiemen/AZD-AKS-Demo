@@ -24,3 +24,6 @@ spec:
           value: "true"
         - name: ASPNETCORE_HTTP_PORTS
           value: "80"
+        # No Seq server is deployed; without this the app fails to start ("Unable to add a Seq health check because the 'ServerUrl' setting is missing")
+        - name: Aspire__Seq__DisableHealthChecks
+          value: "true"

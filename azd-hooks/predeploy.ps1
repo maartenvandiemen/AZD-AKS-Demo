@@ -23,7 +23,7 @@ try {
 
 try {
     @"
-image: ${env:AZURE_REGISTRY_URI}/maartenvandiemen/eshoponweb:latest
+image: ${env:AZURE_REGISTRY_URI}/maartenvandiemen/eshoponwebmvc:latest
 "@ | Out-File -FilePath ./custom-values.yaml -Encoding utf8 -Force
 } catch {
     Write-Error "Failed to write custom-values.yaml: $_"

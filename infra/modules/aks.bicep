@@ -7,25 +7,11 @@ param acrName string
 var uniqueName = uniqueString(resourceGroup().id, subscription().id)
 var aksName = 'aks-${uniqueName}'
 
-resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' existing = {
+resource registry 'Microsoft.ContainerRegistry/registries@2025-11-01' existing = {
   name: acrName
 }
 
-resource logWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
-  name: 'logAnalytics-${uniqueName}'
-  location: resourceGroup().location
-  tags: tags
-  identity: {
-    type: 'SystemAssigned'
-  }
-  properties: {
-    sku: {
-      name: 'PerGB2018'
-    }
-  }
-}
-
-resource aks 'Microsoft.ContainerService/managedClusters@2024-09-01' = {
+resource aks 'Microsoft.ContainerService/managedClusters@2026-06-01' = {
   name: aksName
   tags: tags
   location: resourceGroup().location
@@ -50,14 +36,12 @@ resource aks 'Microsoft.ContainerService/managedClusters@2024-09-01' = {
       }
     ]    
     addonProfiles: {
+      // Metrics go to the Azure Monitor workspace (Managed Prometheus) and are shown in Grafana, so Container Insights / Log Analytics isn't used.
+      // Explicitly disabled so it also gets turned off on a cluster that was deployed with it.
       omsagent: {
-        enabled: true
-        config: {
-          logAnalyticsWorkspaceResourceID: logWorkspace.id
-          useAADAuth: 'true'
-        }
+        enabled: false
       }
-    }    
+    }
   }
 }
 

@@ -5,17 +5,17 @@ param aksName string
 
 var uniqueName = uniqueString(resourceGroup().id, subscription().id)
 
-resource aks 'Microsoft.ContainerService/managedClusters@2024-02-01' existing = {
+resource aks 'Microsoft.ContainerService/managedClusters@2026-06-01' existing = {
   name: aksName
 }
 
-resource monitorWorkspace 'Microsoft.Monitor/accounts@2023-04-03' = {
+resource monitorWorkspace 'Microsoft.Monitor/accounts@2025-10-03' = {
   name: 'monitor-${uniqueName}'
   location: resourceGroup().location
   tags: tags
 }
 
-resource grafana 'Microsoft.Dashboard/grafana@2023-09-01' = {
+resource grafana 'Microsoft.Dashboard/grafana@2025-08-01' = {
   name: 'grafana-${uniqueName}'
   location: resourceGroup().location
   tags: tags
@@ -23,7 +23,7 @@ resource grafana 'Microsoft.Dashboard/grafana@2023-09-01' = {
     type: 'SystemAssigned'
   }
   sku: {
-    name: 'Essential'
+    name: 'Standard'
   }
   properties: {
     grafanaIntegrations: {
@@ -41,7 +41,7 @@ resource monitoringDataReaderRole 'Microsoft.Authorization/roleDefinitions@2022-
   scope: subscription()
 }
 
-resource dataCollectionRuleAssociation 'Microsoft.Insights/dataCollectionRuleAssociations@2023-03-11' = {
+resource dataCollectionRuleAssociation 'Microsoft.Insights/dataCollectionRuleAssociations@2024-03-11' = {
   name: 'dataCollectionRA-${uniqueName}'
   scope: aks
   properties: {
